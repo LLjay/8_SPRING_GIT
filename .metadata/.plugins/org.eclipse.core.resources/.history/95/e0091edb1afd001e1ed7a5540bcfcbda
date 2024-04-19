@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.5.xsd">
+<!-- spring bean configuration file 생성 -> bean, security 추가 -->
+
+	<bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" id="bcryptPasswordEncoder"/>
+	<!-- 클래스에 있는 것을 아이디라는 변수 명으로 스프링이 만들어줄 것 -->
+	<!-- 이런 파일을 만들었으면 web.xml에 추가해줘야 인식할 수 있음 -->
+
+</beans>

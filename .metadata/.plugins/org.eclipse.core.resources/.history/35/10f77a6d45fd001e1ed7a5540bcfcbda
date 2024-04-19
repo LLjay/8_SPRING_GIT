@@ -1,0 +1,18 @@
+package com.kh.spring.board.service;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.kh.spring.board.model.dao.BoardDao;
+
+// 의존성을 낮추기 위해 인터페이스로 구현
+@Service
+public class BoardServiceImpl implements BoardService{
+	
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	
+	@Autowired
+	private BoardDao boardDao;
+}

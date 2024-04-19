@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- namespace: 해당 mapper파일의 고유한 별칭 -->
+<mapper namespace="boardMapper">
+<resultMap type="Board" id="boardResultSet">
+	<result column="BOARD_NO" property="boardNo"></result>
+	<result column="BOARD_TITLE" property="boardTitle"></result>
+	<result column="BOARD_WRITER" property="boardWriter"></result>
+	<result column="ORIGIN_NAME" property="originName"></result>
+	<result column="COUNT" property="count"></result>
+	<result column="CREATE_DATE" property="createDate"></result>
+</resultMap>
+<select id="selectListCount" resultType="_int">
+	SELECT COUNT(*)
+	FROM BOARD
+	WHERE STATUS = 'Y'
+</select>
+<select id="selectList" resultMap="boardResultSet">
+	SELECT BOARD_NO,
+		   BOARD_TITLE,
+		   BOARD_WRITER,
+		   ORIGIN_NAME,
+		   COUNT,
+		   TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE"
+	  FROM BOARD
+	 WHERE STATUS = 'Y'
+	 ORDER BY BOARD_NO DESC
+</select>
+<!--BOARD_NO
+BOARD_TITLE
+BOARD_WRITER
+BOARD_CONTENT
+ORIGIN_NAME
+CHANGE_NAME
+COUNT
+CREATE_DATE
+STATUS-->
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			/WEB-INF/spring/root-context.xml
+			<!-- bin을 등록하기 위한 경로 -->
+		</param-value>
+	</context-param>
+	
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- Processes application requests -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- 
+			원래는 서블릿에 바로 요청했음, 그게 컨트롤러
+			이제는 컨트롤러를 따로 만들어줄 것 -> 스프링이 디스패쳐서블릿 생성, 중간에서 오는 파라미터 정보들을 컨트롤러의 매핑 값과 매치해서 던져줄 것
+			원래 bin으로 등록 했던 걸 어노테이션으로도 등록할 수 있음
+			어노테이션 : 직관적인 장점이 있다
+			톰캣이 원래 서블릿을 만들어줌 -> 컨테이너
+			DI 컨테이너는 의존성을 관리하는 박스
+			디스패쳐 서블릿이 서블릿들을 관리하면서 요청 파라미터와 변수명을 매치 해줌, 매치해서 객체 단위로 바로 컨트롤러로 넘겨줌
+			필드명으로 보내는 게 쉽지 않다? 그래서 dto를 사용? dto로 받아서 넘겨주는 것?
+		-->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping> 
+	
+</web-app>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!-- namespace: 해당 mapper파일의 고유한 별칭 -->
+<mapper namespace="boardMapper">
+<resultMap type="Board" id="boardResultSet">
+	<result column="BOARD_NO" property="boardNo"></result>
+	<result column="BOARD_TITLE" property="boardTitle"></result>
+	<result column="BOARD_WRITER" property="boardWriter"></result>
+	<result column="BOARD_CONTENT" property="boardContent"></result>
+	<result column="ORIGIN_NAME" property="originName"></result>
+	<result column="CHANGE_NAME" property="changeName"></result>
+	<result column="COUNT" property="count"></result>
+	<result column="CREATE_DATE" property="createDate"></result>
+</resultMap>
+<!-- join이 많고, 컬럼명과 필드명이 일치하지 않는 경우가 많을 때는 resultMap으로 할 수 밖에 없음 -->
+<!-- 하지만 같다면 자동으로 넣어줄 수 있음 -->
+<resultMap type="Reply" id="replyResultSet">
+	<result column="REPLY_NO" property="replyNo"></result>
+	<result column="REPLY_CONTENT" property="replyContent"></result>
+	<result column="REF_BNO" property="refBno"></result>
+	<result column="REPLY_WRITER" property="replyWriter"></result>
+	<result column="CREATE_DATE" property="createDate"></result>
+</resultMap>
+<select id="selectListCount" resultType="_int">
+	SELECT COUNT(*)
+	FROM BOARD
+	WHERE STATUS = 'Y'
+</select>
+<select id="selectList" resultMap="boardResultSet">
+	SELECT BOARD_NO,
+		   BOARD_TITLE,
+		   BOARD_WRITER,
+		   ORIGIN_NAME,
+		   COUNT,
+		   TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE"
+	  FROM BOARD
+	 WHERE STATUS = 'Y'
+	 ORDER BY BOARD_NO DESC
+</select>
+<update id="increaseCount">
+	UPDATE BOARD
+	SET COUNT = COUNT + 1
+	WHERE BOARD_NO = #{bno}
+	AND STATUS = 'Y'
+</update>
+<select id="selectBoard" resultMap="boardResultSet">
+	SELECT BOARD_NO,
+		   BOARD_TITLE,
+		   BOARD_WRITER,
+		   BOARD_CONTENT,
+		   ORIGIN_NAME,
+		   CHANGE_NAME,
+		   COUNT,
+		   TO_CHAR(CREATE_DATE, 'YYYY-MM-DD') AS "CREATE_DATE"
+	  FROM BOARD
+	 WHERE STATUS = 'Y'
+	 AND BOARD_NO = #{bno}
+</select>
+<select id="selectReplyList" resultType="Reply">
+<!-- 객체 별칭을 넣어줄 수도 있음, 대신 역시 config에 등록해야 함 -->
+	SELECT REPLY_NO,
+		   REPLY_CONTENT,
+		   REPLY_WRITER,
+		   CREATE_DATE
+	FROM REPLY
+	WHERE REF_BNO = #{bno}
+	AND STATUS = 'Y'
+</select>
+</mapper>
