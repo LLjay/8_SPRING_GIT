@@ -1,0 +1,28 @@
+package com.kh.openData.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class APIController {
+	public static final String SERVICE_KEY="Grxmnd0m5qomi%2BM2R0VuQTB8VwW3B1xbJ1CCctU9UXuVP7OTQABkaeNfEP1hSag3QVygTWXzELqVWLGMRYThyQ%3D%3D";
+	
+//	@RequestMapping
+//	public String getAirInfo() {
+//		return "";
+//	}
+	
+	@PostMapping
+	public String getAirInfo() {
+		return "";
+	}
+	
+	@GetMapping
+	public String getAirInfo() {
+		return "";
+	}
+	
+	// 프로젝트 시 GET : 조회, POST : 생성, 수정, 삭제로 할 것
+	
+}

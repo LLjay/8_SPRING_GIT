@@ -1,0 +1,6 @@
+package com.kh.openData.controller;
+
+@Controller
+public class APIController {
+
+}

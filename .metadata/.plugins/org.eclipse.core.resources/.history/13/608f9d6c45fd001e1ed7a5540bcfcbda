@@ -1,6 +1,0 @@
-package com.kh.spring.board.service;
-
-public interface BoardService {
-	// 게시글 총 개수 가져오기
-	int selectListCount();
-}

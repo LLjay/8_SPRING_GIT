@@ -1,5 +1,6 @@
 package com.kh.spring.member.controller;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -159,7 +160,7 @@ public class MemberController {
 	// 2. 스프링에서 제공하는 ModelAndView 객체 사용
 //	이건 잘 안 씀
 	@RequestMapping("login.me")
-	public ModelAndView loginMember(Member m, ModelAndView mv, HttpSession session) {
+	public ModelAndView loginMember(Member m, ModelAndView mv, HttpSession session, String saveId, Http) {
 		// 암호화 전
 //		Member loginUser = memberService.loginMember(m);
 //		
@@ -202,9 +203,18 @@ public class MemberController {
 			mv.addObject("errorMsg", "비밀번호가 일치하지 않습니다.");
 			mv.setViewName("common/errorPage");
 		} else { // 성공
-			session.setAttribute("loginUser", loginUser);
-			mv.setViewName("redirect:/");
+//			session.setAttribute("loginUser", loginUser);
+//			mv.setViewName("redirect:/");
+			
+			Cookie ck = new Cookie("saveId", loginUser.getUserId());
+			if (saveId == null) {
+				ck.setMaxAge(0);
+			}
+			
+			response.addCookie(ck);
 		}
+		
+		// input으로 들어온 saveId가 매개변수를 통해 들어올 것
 		return mv;
 	}
 //	굳이 컨트롤러 다시 안 받아줘도 됨, 매핑값만 잘 해주면 됨

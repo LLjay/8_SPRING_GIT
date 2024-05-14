@@ -1,0 +1,15 @@
+package com.kh.spring.aspect;
+
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
+
+/*
+ * #Aspect : 해당 클래스가 Aspect라는 것을 의미함
+ */
+@Aspect
+@Component
+// 이건 Aspect라는 걸 알려주는 거지 빈에 등록해주는 게 아님 -> Component 어노테이션도 같이 써줘야 함, 그래야 빈에 등록해줌
+public class LoggingAOP {
+//	로그가 필요한 곳에 덕지덕지 붙여줄 것
+
+}

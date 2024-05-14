@@ -1,136 +1,124 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>게시글 상세보기</title>
 <style>
-	table * {margin:5px;}
-	table {width:100%;}
-</style> 
+table * {
+	margin: 5px;
+}
+
+table {
+	width: 100%;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="../common/header.jsp" />
 
-    <div class="content">
-        <br><br>
-        <div class="innerOuter">
-            <h2>게시글 상세보기</h2>
-            <br>
+	<div class="content">
+		<br>
+		<br>
+		<div class="innerOuter">
+			<h2>게시글 상세보기</h2>
+			<br> <a class="btn btn-secondary" style="float: right;"
+				href="list.bo">목록으로</a> <br>
+			<br>
 
-            <a class="btn btn-secondary" style="float:right;" href="list.bo">목록으로</a>
-            <br><br>
-
-            <table id="contentArea" algin="center" class="table">
-                <tr>
-                    <th width="100">제목</th>
-                    <td colspan="3">${b.boardTitle }</td>
-                </tr>
-                <tr>
-                    <th>작성자</th>
-                    <td>${b.boardWriter }</td>
-                    <th>작성일</th>
-                    <td>${b.createDate }</td>
-                </tr>
-                <tr>
-                    <th>첨부파일</th>
-                    <td colspan="3">
-						<c:choose>
+			<table id="contentArea" algin="center" class="table">
+				<tr>
+					<th width="100">제목</th>
+					<td colspan="3">${b.boardTitle }</td>
+				</tr>
+				<tr>
+					<th>작성자</th>
+					<td>${b.boardWriter }</td>
+					<th>작성일</th>
+					<td>${b.createDate }</td>
+				</tr>
+				<tr>
+					<th>첨부파일</th>
+					<td colspan="3"><c:choose>
 							<c:when test="${not empty b.originName }">
-							<!-- case1 -->
-                        		<a href="${b.changeName }" download="${b.originName }">이미지.jpg</a>
-                        	</c:when>
-                        	<c:otherwise>
-							<!-- case2 -->
+								<!-- case1 -->
+								<a href="${b.changeName }" download="${b.originName }">이미지.jpg</a>
+							</c:when>
+							<c:otherwise>
+								<!-- case2 -->
 								첨부파일이 없습니다.
 							</c:otherwise>
-						</c:choose>
-                    </td>
-                </tr>
-                <tr>
-                    <th>내용</th>
-                    <td colspan="3"></td>
-                </tr>
-                <tr>
-                    <td colspan="4"><p style="height:150px;">게시글내용입니다</p></td>
-                </tr>
-            </table>
-            <br>
+						</c:choose></td>
+				</tr>
+				<tr>
+					<th>내용</th>
+					<td colspan="3"></td>
+				</tr>
+				<tr>
+					<td colspan="4"><p style="height: 150px;">게시글내용입니다</p></td>
+				</tr>
+			</table>
+			<br>
 
-   			
-   			<!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
-            <div align="center">
-            <c:if test="${loginUser.userId eq b.boardWriter }">
-                <a class="btn btn-primary" onclick="postFormSubmit('edit')">수정하기</a>
-                <a class="btn btn-danger" onclick="postFormSubmit('delete')">삭제하기</a>
-               </c:if>
-            </div>
-            <br><br>
-           
-            <form id="postForm" action="" method="POST">
-                <input type="hidden" name="bno" value="${b.boardNo}">
-            </form>
 
-            <script>
-                function postFormSubmit(type){
-                    const formE1 = document.querySelector("#postForm");
-                    switch(type){
-                        case "edit" : {
-                            // formE1.setAttribute("action", "updateForm.bo");
-                            // jQuery : $(formE1).attr("action", "updateForm.bo");
-                            formE1.action = "updateForm.bo";
-                        } break;
-                        case "delete" : {
-                            formE1.setAttribute("action", "delete.bo");
-                        } break;
-                    }
-                    $(formE1).submit();
-                }
-            </script>
-            
-             <form action="" method="post" id="postForm">
-           		<input type="hidden" name=bno value="7">
-           		<input type="hidden" name="filePath" value="이미지.jpg">
-             </form>
-            
-          
-            <!-- 댓글 기능은 나중에 ajax 배우고 나서 구현할 예정! 우선은 화면구현만 해놓음 -->
-            <table id="replyArea" class="table" align="center">
-                <thead>
-                <c:choose>
-                	<c:when test="${empty loginUser }">
-	                    <tr>
-	                        <th colspan="2">
-	                            <textarea class="form-control" readonly cols="55" rows="2" style="resize:none; width:100%;">로그인 후 이용 가능합니다.</textarea>
-	                        </th>
-	                        <th style="vertical-align:middle"><button class="btn btn-secondary disabled">등록하기</button></th>
-	                    </tr>
-                	</c:when>
-                    <c:otherwise>
-	                     <tr> 
-	                        <th colspan="2">
-	                            <textarea class="form-control" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
-	                        </th>
-	                        <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addReply();">등록하기</button></th>
-	                    </tr>  
-	                </c:otherwise>
-                </c:choose>
-                    
-                    <tr>
-                        <td colspan="3">댓글(<span id="rcount">0</span>)</td>
-                    </tr>
-                    
-                </thead>
-                <tbody>
-                  	
-                </tbody>
-            </table>
-        </div>
-        <br><br>
+			<!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
+			<div align="center">
+				<c:if test="${loginUser.userId eq b.boardWriter }">
+					<a class="btn btn-primary" onclick="">수정하기</a>
+					<a class="btn btn-danger" onclick="">삭제하기</a>
+				</c:if>
+			</div>
+			<br>
+			<br>
 
-        <script>
+
+			<form action="" method="post" id="postForm">
+				<input type="hidden" name=bno value="7"> <input
+					type="hidden" name="filePath" value="이미지.jpg">
+			</form>
+
+
+			<!-- 댓글 기능은 나중에 ajax 배우고 나서 구현할 예정! 우선은 화면구현만 해놓음 -->
+			<table id="replyArea" class="table" align="center">
+				<thead>
+					<c:choose>
+						<c:when test="${empty loginUser }">
+							<tr>
+								<th colspan="2"><textarea class="form-control" readonly
+										cols="55" rows="2" style="resize: none; width: 100%;">로그인 후 이용 가능합니다.</textarea>
+								</th>
+								<th style="vertical-align: middle"><button
+										class="btn btn-secondary disabled">등록하기</button></th>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<th colspan="2"><textarea class="form-control" id="content"
+										cols="55" rows="2" style="resize: none; width: 100%;"></textarea>
+								</th>
+								<th style="vertical-align: middle"><button
+										class="btn btn-secondary" onclick="addReply();">등록하기</button></th>
+							</tr>
+						</c:otherwise>
+					</c:choose>
+
+					<tr>
+						<td colspan="3">댓글(<span id="rcount">0</span>)
+						</td>
+					</tr>
+
+				</thead>
+				<tbody>
+
+				</tbody>
+			</table>
+		</div>
+		<br>
+		<br>
+
+		<script>
             $(function(){
                 getReplyList({bno :  ${b.boardNo}}, function(result){
                     drawReplyList(result);
@@ -178,12 +166,6 @@
             // 2. document element : 이벤트를 넣는 뷰를 작성하고 싶을 때
             // tr 자체를 document로 만든다?
             function drawReplyList(replyList){
-                const rCount = document.querySelector("#rcount");
-                rCount.innerHTML = result.length;
-
-                const replyBody = document.querySelector("#replyArea body");
-                const list = [];
-
                 for (let reply of replyList){
                     const replyRow = document.createElement('tr');
                     // 객체로 만들어서 가져와준 것
@@ -205,12 +187,10 @@
                 // 데이터만 넘겨주면 ui는 알아서 그려줄게 -> 라이브러리
             }
 
-            // 댓글 카운트
-            // ajax로 그려왔는데 그 뒤에 다시 덧붙이는 일이 흔함
-            // parent를 다시 그려주기 위해 한 번 없애주면 됨
+
         </script>
-    </div>
-    
-    <jsp:include page="../common/footer.jsp" />
+	</div>
+
+	<jsp:include page="../common/footer.jsp" />
 </body>
 </html>

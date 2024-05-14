@@ -1,0 +1,17 @@
+package com.kh.summernote;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class BoardController {
+	// 게시글 작성 (화면)
+	@GetMapping("write") // Post로 보내면 얘는 받지 않음
+	public String write() {
+		return "write";
+	}
+	
+	// ajax로 들어오는 파일 업로드 요청 처리
+	public String upload(List<MultipartFile> fileList)
+	// Spring에서는 multipart 파일을 MultipartFile 객체로 받음
+}

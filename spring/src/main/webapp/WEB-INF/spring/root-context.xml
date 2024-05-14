@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 	
 	<!-- bean을 등록하는 곳, 아직 아무것도 등록하지 않았으니 없음 -->
 	<!-- 의존성 주입해서 사용해야 하는 것들 : bean -->
@@ -50,4 +54,24 @@
 	 <!-- 
 	 	SqlSessionTemplate sqlSession = new SqlSessionTemplate(sqlSessionFactory);
 	  -->
+	  
+	  <!-- 
+	  	property : setter를 통한 주입
+	  	constructor-arg : 생성자를 통한 주입
+	   -->
+	  
+	  <!-- 파일 업로드 관련 빈 등록 -->
+	  <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
+	  	<property name="maxUploadSize" value="100000000"/>
+	  	<property name="maxInMemorySize" value="100000000"/>
+	  	<!-- 문서에 옵션 써져있음 -->
+	  </bean>
+	  
+	  <!-- @Aspect 및 하위 어노테이션 활성화 -->
+	  <aop:aspectj-autoproxy />
+	  
+	  <!--  -->
+	  <context:component-scan base-package="com.kh.spring" use-default-filters="false">
+	  		<context:include-filter type="annotation" expression="org.aspeectj.lang.annotation.Aspect"/>
+	  </context:component-scan>
 </beans>

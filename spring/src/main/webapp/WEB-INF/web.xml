@@ -17,7 +17,7 @@
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener
-		</listener-class>
+		</listener-class> <!-- bean을 등록 해주는 객체 / 초기 세팅 작업 -->
 	</listener>
 
 	<!-- Processes application requests -->

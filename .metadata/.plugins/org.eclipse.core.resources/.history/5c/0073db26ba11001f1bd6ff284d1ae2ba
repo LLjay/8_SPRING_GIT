@@ -1,0 +1,9 @@
+package com.kh.spring.aspect;
+
+import org.aspectj.lang.annotation.Aspect;
+
+@Aspect
+public class LoggingAOP {
+//	로그가 필요한 곳에 덕지덕지 붙여줄 것
+
+}

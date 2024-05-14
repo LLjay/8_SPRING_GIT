@@ -1,0 +1,51 @@
+package com.kh.spring.aspect;
+
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.stereotype.Component;
+
+import lombok.extern.slf4j.Slf4j;
+
+/*
+ * # @Aspect : 해당 클래스가 Aspect라는 것을 의미함
+ * # @Component : Spring이 해당 빈을 서치할 수 있도록 선언 (빈에 등록)
+ *  	// @Slf4j : 로그 등록 시 쓰는 어노테이션
+ * # @EnableAspectJAutoProxy : aop를 활성화 시켜주는 선언
+ */
+
+// 내가 원하는 시점을 지정하기 위해 aop를 사용하는 것
+@Aspect
+@Component
+@Slf4j
+@EnableAspectJAutoProxy // 이거 사용할 때는 Component 어노테이션 안 써줘도 됨
+// 이건 Aspect라는 걸 알려주는 거지 빈에 등록해주는 게 아님 -> Component 어노테이션도 같이 써줘야 함, 그래야 빈에 등록해줌
+public class LoggingAOP {
+//	로그가 필요한 곳에 덕지덕지 붙여줄 것
+
+	/*
+	 * <시점>
+	 * @Before : 대상 메소드 실행 전에 Advice(추가 기능)가 실행됨
+	 * 
+	 * <대상>
+	 * target : 특정 인터페이스와 그 자식 클래스
+	 * within : 특정 패키지 또는 클래스
+	 * execution : 표현식으로 형태 지정
+	 *   // 표현식 : 아직 정해지지 않았다, 형식만 지정해두는 것?
+	 * 
+	 */
+	
+	// 리턴 타입, 파라미터, 예외
+	// @Pointcut : 기능을 사용할 지점을 정의하는 것
+	// com.kh.spring 패키지 하위 패키지 중 controller 내에 있는 모든 클래스의 모든 메소드
+	@Pointcut("execution(*com.kh.spring..controller.*.*(..))") // aop에서 많이 쓰는 어노테이션
+//	.. : spring 안의 어떤 폴더일지 모름
+//	controller 안의 모든 폴더 안의 모든 객체
+	
+	@Before("target(com.kh.spring.board.controller.BoardController)") // 이 메소드에 하겠다고 join point를 지정해줄 수 있음, 이걸 할 때 하겠다
+//	보통 한 메소드에 하나씩 정해주지는 않음
+	public void before() {
+		
+	}
+}

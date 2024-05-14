@@ -1,9 +1,0 @@
-package com.kh.spring.board.model.dao;
-
-import org.mybatis.spring.SqlSessionTemplate;
-
-public class BoardDao {
-	public int selectListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("member-Mapper.selectListCount");
-	}
-}

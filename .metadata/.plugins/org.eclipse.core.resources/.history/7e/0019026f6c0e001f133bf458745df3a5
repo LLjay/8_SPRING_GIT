@@ -1,0 +1,38 @@
+package com.kh.openData.controller;
+
+import java.io.IOException;
+import java.net.URLEncoder;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class APIController {
+	public static final String SERVICE_KEY="Grxmnd0m5qomi%2BM2R0VuQTB8VwW3B1xbJ1CCctU9UXuVP7OTQABkaeNfEP1hSag3QVygTWXzELqVWLGMRYThyQ%3D%3D";
+	
+	@RequestMapping(value="air")
+	public String getAirInfo(String location) throws IOException{
+		String url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty";
+		
+		url += "?serviceKey=" + SERVICE_KEY;
+//		요청변수에 서비스키는 이 항목명으로 보내라고 써있기 때문
+//		데이터를 가져올 때는 대부분 GET 요청 (숨길 필요가 없으므로)
+		url += "&returnType=json";
+		url += "&sidoName=" + URLEncoder.encode("서울", "UTF-8"); // 요청 시 전달 값에 한글이 있으면 인코딩 작업을 해줘야 함
+//		
+		return "";
+	}
+	
+//	@PostMapping(value="air")
+//	public String getAirInfo() {
+//		return "";
+//	}
+//	
+//	@GetMapping(value="air")
+//	public String getAirInfo() {
+//		return "";
+//	}
+	
+	// 프로젝트 시 GET : 조회, POST : 생성, 수정, 삭제로 할 것
+	
+}

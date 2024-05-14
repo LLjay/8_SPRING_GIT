@@ -44,4 +44,12 @@
 		
 			// 원래 이런 과정을 거쳐서 bean을 등록해야 하는데 이러면 한 페이지에 모든 bean이 들어가므로 대신 어노테이션을 써주는 것
 		 -->
+		 
+		 <interceptors>
+		 	<interceptor>
+		 		<mapping path="/myPage.me"/>
+		 		<mapping path="/enrollForm.bo"/>
+		 		<beans:bean class="com.kh.spring.common.intercepter" id="loginIntercepter"/>
+		 	</interceptor>
+		 </interceptors>
 </beans:beans>
