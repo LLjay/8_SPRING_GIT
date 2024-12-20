@@ -7,14 +7,20 @@ import org.springframework.stereotype.Service;
 import com.kh.spring.member.model.dao.MemberDao;
 import com.kh.spring.member.model.vo.Member;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor // 의존성을 주입해야 하는 필드를 생성자로 만들어주는 어노테이션
 @Service // Component 보다 더 구체화 해서 Service bean으로 등록하는 것
 public class MemberServiceImpl implements MemberService{
 
-	@Autowired // 이걸 bean에 등록 하겠다는 선언
-	private SqlSessionTemplate sqlSession; // 기존의 myBatis SqlSession 객체 대체
+//	@Autowired // 이걸 bean에 등록 하겠다는 선언
+//	private SqlSessionTemplate sqlSession; // 기존의 myBatis SqlSession 객체 대체
+//	
+//	@Autowired
+//	private MemberDao memberDao;
 	
-	@Autowired
-	private MemberDao memberDao;
+	private final SqlSessionTemplate sqlSession;
+	private final MemberDao memberDao;
 	
 	@Override
 	public Member loginMember(Member m) {

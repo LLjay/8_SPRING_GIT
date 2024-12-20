@@ -1,6 +1,5 @@
 package com.kh.spring.member.controller;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,18 +24,35 @@ import com.kh.spring.member.service.MemberService;
 // -> 원래 login.me 였던 게 member/login으로 바뀌는 것
 public class MemberController {
 	
-	// 스프링이 의존성을 주입한 것이라고 알아야 하므로 어노테이션 적용
-	@Autowired
-	private MemberService memberService;
-	
-	@Autowired
-	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	// 의존성을 주입한 것
-	// 생명주기 관리를 해준 것이다, 객체가 생성되고 소멸하는 과정까지 스프링이 다 해줄 것
-	// ?????????????????????????
-	// 인터페이스니까 변경 되어도 상관 없음?
-//	private MemberService memberService = new MemberServiceImpl();
-//	원래 이렇게 했음
+		// 생명주기 관리를 해준 것이다, 객체가 생성되고 소멸하는 과정까지 스프링이 다 해줄 것
+		// ?????????????????????????
+		// 인터페이스니까 변경 되어도 상관 없음?
+//		private MemberService memberService = new MemberServiceImpl();
+//		원래 이렇게 했음
+	
+//	#필드 주입 방식
+//	@Autowired
+//	private MemberService memberService;
+//	
+//	@Autowired
+//	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	// 스프링이 의존성을 주입한 것이라고 알아야 하므로 어노테이션 적용
+	
+	
+//	#생성자 주입 방식
+	private final MemberService memberService;
+	
+	private final BCryptPasswordEncoder bcryptPasswordEncoder;
+	
+//	이 생성자는 객체가 생성될 때 만들어지는 것이므로 사이에 null이 들어갈 시차가 생기지 않음
+	@Autowired
+	public MemberController(MemberService memberService, BCryptPasswordEncoder bcryptPasswordEncoder) {
+		this.memberService = memberService;
+		this.bcryptPasswordEncoder = bcryptPasswordEncoder;
+	}
+	
+	
 	/*
 	 * #기존 객체 생성 방식
 	 * - 객체 간 결합도가 높아짐(소스코드 수정이 일어날 경우 하나하나 전부 다 바꿔줘야 함)
@@ -48,6 +64,19 @@ public class MemberController {
 	 *  #Spring의 DI(Dependency Injection)를 이용한 방식
 	 *  - 객체를 생성해서 주입해줌
 	 *  - new라는 객체 생성 키워드 없이 @Autowired라는 어노테이션으로 사용해야 함
+	 *  
+	 *  -----------------------------------------------------------------
+	 *  
+	 *  #필드 주입 방식
+	 *  스프링 컨테이너가 객체를 생성한 후, @Autowired 어노테이션이 붙은 필드에 의존성 주입
+	 *  
+	 *  #생성자 주입 방식
+	 *  스프링 컨테이너가 객체를 생성할 때 생성자를 통해서 필요한 의존성 주입
+	 *  
+	 *  #필드 주입 방식 -> 생성자 주입 방식
+	 *  주입 시점 차이로 인해 객체가 완전히 초기화된 상태로 사용할 수 있음을 보장(불변성 확보)
+	 *  	// 주입 시점 차가 발생하지 않음
+	 *  테스트 가능성과 유지 보수성 증가
 	 */
 	
 	/*

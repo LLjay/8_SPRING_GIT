@@ -42,8 +42,9 @@
  	<!-- mappers : 실행할 sql문들을 기록해둔 mapper파일들을 등록하는 영역 -->
  	<!-- 안 쓰는 mapper는 아예 빼야 에러나지 않음 -->
  	<mappers>
- 		<mapper resource="/mappers/member-mapper.xml"/>
- 		<mapper resource="/mappers/board-mapper.xml"/>
+ 		<mapper resource="mappers/member-mapper.xml"/>
+ 		<mapper resource="mappers/board-mapper.xml"/>
+ 		<!-- 상대 경로로 안 해주면 build path에서 잘 못 잡는 경우가 생기므로 절대 -> 상대로 바꿈 -->
  	</mappers>
 
  	<!-- mybatis에 가면 독타입을 필요한 걸 쓸 수 있도록 함 -->
